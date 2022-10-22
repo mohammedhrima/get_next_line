@@ -65,11 +65,11 @@ char* qra_lfile(int fd)
 		if(c)
 		{
 			printf("-> new line index %d\n",c);
-			BUFF = buffer_size + c;
+			BUFF = BUFFER_SIZE + c;
 			break;
 		}
 		else
-			BUFF = buffer_size;
+			BUFF = BUFFER_SIZE;
 		
 		curr = (char*)malloc((BUFF + 1)*sizeof(char));
 		*curr = 0;

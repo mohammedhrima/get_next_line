@@ -39,7 +39,7 @@ char *concat_till_newline(char *dest, char *src)
 char* read_file(int fd)
 {
 
-	int size = buffer_size;
+	int size = BUFFER_SIZE;
 	char* str = (char*)malloc((size + 1)*sizeof(char));
 	char *res = (char*)malloc((200)*sizeof(char));
 	char *backup = (char*)malloc((size + 1)*sizeof(char));

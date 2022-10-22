@@ -1,13 +1,28 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   001.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mhrima <mhrima@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 23:21:27 by mhrima            #+#    #+#             */
+/*   Updated: 2022/10/20 23:24:30 by mhrima           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <unistd.h>
-#include <stdlib.h>
 
 /*char* qra_lfile(char *file)
 {
-	int fd = open(file,O_RDWR | O_CREAT);
+	int			fd;
+	static int	var;
+
+	fd = open(file,O_RDWR | O_CREAT);
 	if(fd == -1)
 		return (NULL);
 	
@@ -19,20 +34,26 @@
 	close(fd);
 	return (str);
 }*/
-void func(void)
+void	func(void)
 {
-	static int i = 0;
-	i+=1;
-	printf("%d\n",i);
+	static int var = 0;
+	
+	if (!var)
+	{
+		printf("I will add one\n");
+		var += 1;
+	}
+	else
+	{
+		printf("already added one\n");
+	}
+	printf("%d\n", var);
 }
 
 int	main(void)
 {
-	//char *data = qra_lfile("file.txt");
-	//printf("->%s\n", data);
-	//int n = func();
 	func();
 	func();
-	//printf("-> %d\n",func());
-
+	func();
+	func();
 }
