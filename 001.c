@@ -157,10 +157,11 @@ int includes(char *str, char c)
 	i = 0;
 	while (str[i])
 	{
+		//printf("%d -> %c\n",i,str[i]);
 		if (str[i] == c)
 		{
-			//printf("lqit \\n\n");
-			return (i);
+			printf("%c is found\n",c);
+			return (1);
 		}
 		i++;
 	}
@@ -212,8 +213,92 @@ char *read_file(int fd)
 	static char *backup;
 	int i = 1;
 	int j = 0;
+
+	str = (char *)malloc((1000000) * sizeof(char));
+	res = (char *)malloc(sizeof(char));
+	*str = '\0';
+	*res = '\0';
+
+	printf("\n\n============Start============\nbefore 1st loop: \nres: %s\nstr: %s\n", res, str);
+
+	if (ft_strlen(backup) && includes(backup, '\n'))
+	{
+		printf("backup(with new line): %s\n", backup);
+		res = backup;
+		int i = 0;
+		while (backup[i] != '\n')
+			i++;
+		res = ft_substr(res, 0, i+1);
+		backup += i ;
+		//printf("before 1st return: \nres: %s\nbackup: %s\n", res, backup);
+		return (res);
+	}
+	printf("\n");
+
+	while (i && !includes(str, '\n'))
+	{
+		//printf("1. -> %s\n",str);
+		i = read(fd, str + j, BUFFER_SIZE);
+		j += i;
+		str[j] = '\0';
+		//printf("2. -> %s\n\n",str);
+		//str+=BUFFER_SIZE;
+	}
+	printf("after first loop:\nres: %s\nstr: %s\nbackup: %s\n\n", res,str, backup);
+	if (ft_strlen(backup))
+	{
+		printf("backup(without new line): %s\n", backup);
+		//printf("there is backup -> %s\n", backup);
+		str = ft_strjoin(backup,str);
+		printf("check res -> %s\n\n", str);
+		backup = NULL;
+	}
+	printf("after 1st statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+	i = 0;
+	while (str && str[i] && str[i] != '\0')
+	{
+		if(str[i] == '\n')
+			break;
+		i++;
+	}
 	
+	res = ft_substr(str, 0,i);
+	str += i;
+	
+	printf("after joining: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+	if(ft_strlen(str))
+	{
+		printf("set backup");
+		backup = ft_strdup(str);
+	}
+	/*if (includes(str, '\n'))
+	{
+		int i = 0;
+		while (str[i] != '\n')
+			i++;
+		backup = ft_strdup(str + i + 1);
+		//printf("-> backup in if statement: %s\n\n", backup);
+		i = 0;
+		while (res[i] != '\n')
+			i++;
+		res[i] = 0;
+		//free(str);
+		printf("after 2nd statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+	}*/
+	free(backup);
+	str= NULL;
+	//printf("after 2nd if statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+	printf("before return: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 	return (res);
+}
+
+void red()
+{
+	printf("\033[1;33m");
+}
+void reset()
+{
+	printf("\033[0m");
 }
 
 int main(void)
@@ -224,21 +309,48 @@ int main(void)
 		printf(" error reading file\n");
 		return (0);
 	}
-	char *res1, *res2, *res3, *res4, *res5, *res6;
 
-	res1 = read_file(fd);
-	res2 = read_file(fd);
-	res3 = read_file(fd);
-	res4 = read_file(fd);
-	res5 = read_file(fd);
-	res6 = read_file(fd);
+	//printf("\n--------IN MAIN--------\n");
+	char *res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n",res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
+	res = read_file(fd);
+	red();
+	printf("the Return ->%s\n\n", res);
+	reset();
 
-	printf("\n--------IN MAIN--------\n");
-	printf("the Return ->%s\n\n", res1);
-	printf("the Return ->%s\n\n", res2);
-	printf("the Return ->%s\n\n", res3);
-	printf("the Return ->%s\n\n", res4);
-	printf("the Return ->%s\n\n", res5);
-	printf("the Return ->%s\n\n", res6);
 	close(fd);
 }

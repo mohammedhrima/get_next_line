@@ -5,9 +5,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1
-#endif
+#define BUFFER_SIZE 20
 
 size_t ft_strlen(const char *str)
 {
@@ -25,6 +23,12 @@ char *ft_strjoin(char const *s1, char const *s2)
 	int j;
 
 	i = 0;
+	if (!s1 && s2)
+		return ((char *)s2);
+	if (s1 && !s2)
+		return ((char *)s1);
+	if (!s1 && !s2)
+		return (NULL);
 	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);
@@ -159,7 +163,7 @@ int includes(char *str, char c)
 	{
 		if (str[i] == c)
 		{
-			//printf("lqit \\n\n");
+			printf("lqit \\n\n");
 			return (i);
 		}
 		i++;
@@ -168,7 +172,7 @@ int includes(char *str, char c)
 }
 char *ft_trim(char **str, char c)
 {
-	int i = 0;
+	int i;
 	int j = 0;
 	char *res;
 
@@ -212,8 +216,27 @@ char *read_file(int fd)
 	static char *backup;
 	int i = 1;
 	int j = 0;
-	
-	return (res);
+
+	if (fd > 2)
+	{
+		str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+		res = (char *)malloc(sizeof(char));
+		*str = '\0';
+		*res = '\0';
+
+		while (i && !includes(str, '\n'))
+		{
+			printf("1. -> %s\n",str);
+			i = read(fd, str + j, BUFFER_SIZE);
+			j += i;
+			str[j] = '\0';
+			printf("2. -> %s\n\n",str);
+			//str+=BUFFER_SIZE;
+		}
+
+		return (res);
+	}
+	return(NULL);
 }
 
 int main(void)

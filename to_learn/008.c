@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#define BUFFER_SIZE 20
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 1
+#endif
 
 size_t ft_strlen(const char *str)
 {
@@ -23,12 +25,6 @@ char *ft_strjoin(char const *s1, char const *s2)
 	int j;
 
 	i = 0;
-	if (!s1 && s2)
-		return ((char *)s2);
-	if (s1 && !s2)
-		return ((char *)s1);
-	if (!s1 && !s2)
-		return (NULL);
 	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);
@@ -163,7 +159,7 @@ int includes(char *str, char c)
 	{
 		if (str[i] == c)
 		{
-			printf("lqit \\n\n");
+			//printf("lqit \\n\n");
 			return (i);
 		}
 		i++;
@@ -217,68 +213,66 @@ char *read_file(int fd)
 	int i = 1;
 	int j = 0;
 
-		str = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+		str = (char *)malloc((1000000) * sizeof(char));
 		res = (char *)malloc(sizeof(char));
 		*str = '\0';
 		*res = '\0';
 
-		printf("\n\n============Start============\nbefore 1st loop: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+		//printf("\n\n============Start============\nbefore 1st loop: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 
 		if (ft_strlen(backup) && includes(backup, '\n'))
 		{
-			printf("there is new line in backup: %s\n\n", backup);
+			//printf("there is new line in backup: %s\n\n", backup);
 			res = backup;
 			int i = 0;
 			while (backup[i] != '\n')
 				i++;
 			res = ft_substr(res, 0, i+1);
 			backup += i + 1;
-			printf("before 1st return: \nres: %s\nbackup: %s\n", res, backup);
+			//printf("before 1st return: \nres: %s\nbackup: %s\n", res, backup);
 			return (res);
 		}
 
 		while (i && !includes(str, '\n'))
 		{
-			printf("1. -> %s\n",str);
+			//printf("1. -> %s\n",str);
 			i = read(fd, str + j, BUFFER_SIZE);
 			j += i;
 			str[j] = '\0';
-			printf("2. -> %s\n\n",str);
+			//printf("2. -> %s\n\n",str);
 			//str+=BUFFER_SIZE;
 		}
-		printf("after first loop:\nres: %s\nbackup: %s\n", res, backup);
+		//printf("after first loop:\nres: %s\nbackup: %s\n", res, backup);
 		if (ft_strlen(backup))
 		{
-			printf("there is backup -> %s\n", backup);
+			//printf("there is backup -> %s\n", backup);
 			res = backup;
 			printf("check res -> %s\n\n", res);
 			backup = NULL;
 		}
-		printf("after 1st statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+		//printf("after 1st statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 
 		res = ft_strjoin(res, str);
-		printf("after joining: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+		//printf("after joining: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 
 		if (includes(str, '\n'))
 		{
 			int i = 0;
 			while (str[i] != '\n')
 				i++;
-			backup = ft_strdup(ft_strchr(str, '\n'));
-			printf("-> backup in if statement: %s\n\n", backup);
+			backup = ft_strdup(str + i + 1);
+			//printf("-> backup in if statement: %s\n\n", backup);
 			i = 0;
-			while (res[i] && res[i] != '\n')
+			while (res[i] != '\n')
 				i++;
-			if (res[i])
-				res = ft_substr(res, 0, i/*+1*/);
-			free(str);
+			res[i + 1] = 0;
+			//free(str);
 		}
-		printf("after 2nd if statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+		//printf("after 2nd if statement: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 
-		str = NULL;
-		free(str);
-		printf("before return: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
 
+		//printf("before return: \nres: %s\nstr: %s\nbackup: %s\n\n", res, str, backup);
+		printf("backup=\"%s\" res=\"%s\" s=\"%s\"\n", backup, res, str);
 		return (res);
 	}
 
