@@ -5,64 +5,107 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhrima <mhrima@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 23:37:49 by mhrima            #+#    #+#             */
-/*   Updated: 2022/10/23 23:55:58 by mhrima           ###   ########.fr       */
+/*   Created: 2022/10/26 04:47:04 by mhrima            #+#    #+#             */
+/*   Updated: 2022/10/26 05:33:11 by mhrima           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+//#include "Leak_Hunter/leak_hunter.h"
 
-char	*ft_if_new_line_in_backup(char **res, char **backup, int *i)
+
+
+char* there_is_not_new_line_in_backup(char* backup, int i)
 {
-	*res = ft_substr(*backup, 0, *i);
-	*backup = ft_strtrim(*backup, '\n');
-	(*backup)++;
-	return (*res);
+	char *res;
+	char *tmp;
+	
+	res = ft_substr(backup, 0, i);
+	tmp = ft_strdup(backup + i + 1);
+	free(backup);
+	backup = tmp;
+	return(res);
 }
 
-char	*ft_while_loop(char **str, int *fd)
+char *get_next_line(int fd)
 {
-	int	i;
-	int	j;
-	int	size;
+	char *res;
+	char *str;
+	char *tmp;
+	static char *backup;
+	int i;
+	int readen_size;
+	int j;
+	int size;
 
-	size = BUFFER_SIZE;
-	i = 1;
 	j = 0;
-	while (i && includes(*str, '\n') == -1)
+	readen_size = 1;
+	size = 0;
+	res = NULL;
+	tmp = NULL;
+	if (fd >= 0)
 	{
-		i = read(*fd, (*str) + j, size);
-		if (i < 0)
+		str = (char *)malloc(10000 * sizeof(char));
+		ft_bzero(str, 10000);
+		i = includes(backup, '\n');
+		if (ft_strlen(backup) && i != -1)
 		{
-			free(*str);
+			res = ft_substr(backup, 0, i);
+			tmp = ft_strdup(backup + i + 1);
+			free(backup);
+			backup = tmp;
+			return(res);
+		}
+			//return(there_is_not_new_line_in_backup(backup,i));
+		while (readen_size && includes(str, '\n') == -1)
+		{
+			readen_size = read(fd, str + j, BUFFER_SIZE);
+			j += readen_size;
+			str[j] = '\0';
+		}
+		if (ft_strlen(backup) && i == -1) // add backup to str
+		{
+			tmp = ft_strjoin(backup, str);
+			free(str);
+			str = tmp;
+		}
+		if (readen_size == 0 && !ft_strlen(str))
+		{
+			free(backup);
+			free(str);
+			str = NULL;
 			return (NULL);
 		}
-		j += i;
-		size += i;
-		(*str)[j] = '\0';
+
+		i = includes(str, '\n');
+		if (i == -1)
+			i = ft_strlen(str);
+		res = ft_substr(str, 0, i);							// substract from the beginning of str till \n if there is else copy it
+		backup = ft_substr(str, i + 1, ft_strlen(str) - 1); // cut form /n till the end
+		free(str);
 	}
-	return ("");
+
+	return (res);
 }
 
-char	*get_next_line(int fd)
+int main(void)
 {
-	char		*str;
-	char		*res;
-	static char	*backup;
-	int			i;
+	//atexit(leak_report);
+	int fd = open("test.txt", O_RDWR, 0777);
+	if (fd == -1)
+	{
+		printf("error reading file\n");
+		return (0);
+	}
+	char *res;
+	res = get_next_line(fd);
+	while (res)
+	{
+		printf("-> %s\n", res);
+		free(res);
+		res = get_next_line(fd);
+	}
+	// while(1);
 
-	res = NULL;
-	str = (char *)malloc((1000000) * sizeof(char));
-	*str = '\0';
-	i = includes(backup, '\n');
-	if (i >= 0)
-		return (ft_if_new_line_in_backup(&res, &backup, &i));
-	res = ft_strjoin(backup, res);
-	if (!ft_while_loop(&str, &fd))
-		return (NULL);
-	res = ft_strjoin(res, ft_substr(str, 0, includes(str, '\n')));
-	backup = ft_strchr(str, '\n');
-	str = NULL;
-	free(str);
-	return (res);
+	return (0);
 }

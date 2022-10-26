@@ -1,0 +1,214 @@
+┌─────────┤ LEAKS LOG ├─────────┐
+│ Total leaks found:         42 │
+│ Total leaks size:         471 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02ab0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c00650 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02b30 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02b80 │
+│ size (bytes):              16 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02be0 │
+│ size (bytes):              32 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02c30 │
+│ size (bytes):              18 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02c90 │
+│ size (bytes):              15 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02cf0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02d50 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02da0 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02df0 │
+│ size (bytes):              16 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02e40 │
+│ size (bytes):              32 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02ea0 │
+│ size (bytes):              23 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02f00 │
+│ size (bytes):              22 │
+│ file:                   012.c │
+│ line:                     149 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02f60 │
+│ size (bytes):               9 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c02fc0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03020 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03070 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c030c0 │
+│ size (bytes):              16 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03110 │
+│ size (bytes):              12 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03160 │
+│ size (bytes):              12 │
+│ file:                   012.c │
+│ line:                     149 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c031b0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03210 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03260 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c032b0 │
+│ size (bytes):               6 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03300 │
+│ size (bytes):               9 │
+│ file:                   012.c │
+│ line:                     149 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03350 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c033b0 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03400 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03450 │
+│ size (bytes):              16 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c034a0 │
+│ size (bytes):              32 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03500 │
+│ size (bytes):              18 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03560 │
+│ size (bytes):              19 │
+│ file:                   012.c │
+│ line:                     149 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c035c0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03620 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03670 │
+│ size (bytes):              15 │
+│ file:                   012.c │
+│ line:                     149 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c036c0 │
+│ size (bytes):               2 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03720 │
+│ size (bytes):               4 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03770 │
+│ size (bytes):               8 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c037c0 │
+│ size (bytes):              16 │
+│ file:                   012.c │
+│ line:                     172 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03810 │
+│ size (bytes):              15 │
+│ file:                   012.c │
+│ line:                      96 │
+├───────────────────────────────┤
+│ address:       0x7ffdd1c03860 │
+│ size (bytes):              14 │
+│ file:                   012.c │
+│ line:                     149 │
+└───────────────────────────────┘└───────────────────────────────┘
