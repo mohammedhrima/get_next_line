@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mhrima <mhrima@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 13:39:38 by mhrima            #+#    #+#             */
-/*   Updated: 2022/10/29 21:21:13 by mhrima           ###   ########.fr       */
+/*   Created: 2022/10/28 05:52:22 by mhrima            #+#    #+#             */
+/*   Updated: 2022/10/29 01:32:05 by mhrima           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 int	includes(char *str, char c)
 {
@@ -26,36 +26,35 @@ int	includes(char *str, char c)
 	return (-1);
 }
 
-char	*handle_backup_and_set_res(char **bcp, char **str, char **res)
+void	handle_backup_and_set_res(char **backup, char **str, char **res)
 {
 	int		i;
 	char	*tmp;
 
-	if (ft_strlen(*bcp))
+	if (ft_strlen(*backup))
 	{
-		tmp = ft_strjoin(*bcp, *str);
+		tmp = ft_strjoin(*backup, *str);
 		*str = tmp;
-		*bcp = NULL;
+		*backup = NULL;
 	}
 	i = includes(*str, '\n');
 	if (i == -1)
 	{
 		i = ft_strlen(*str) - 1;
-		free(*bcp);
-		*bcp = NULL;
+		free(*backup);
+		*backup = NULL;
 	}
-	*bcp = ft_substr(*str, i + 1, ft_strlen(*str));
+	*backup = ft_substr(*str, i + 1, ft_strlen(*str));
 	*res = ft_substr(*str, 0, i + 1);
 	free(*str);
 	*str = NULL;
-	return (*res);
 }
 
-int	read_from_file_and_feed_str(char **str, char **bcp, int fd, ssize_t *r)
+int	read_from_file_and_feed_str(char **str, int fd, int *r)
 {
 	char	*tmp;
 
-	tmp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	tmp = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
 	if (tmp == NULL)
 	{
 		free(*str);
@@ -66,7 +65,6 @@ int	read_from_file_and_feed_str(char **str, char **bcp, int fd, ssize_t *r)
 	{
 		free(tmp);
 		free(*str);
-		free(*bcp);
 		return (0);
 	}
 	tmp[*r] = '\0';
@@ -74,9 +72,9 @@ int	read_from_file_and_feed_str(char **str, char **bcp, int fd, ssize_t *r)
 	return (1);
 }
 
-void	in_the_end_of_file(char **bcp, char **str, char **res)
+void	in_the_end_of_file(char **backup, char **str, char **res)
 {
-	free(&bcp);
+	free(&backup);
 	free(&str);
 	free(&res);
 }
@@ -85,25 +83,24 @@ char	*get_next_line(int fd)
 {
 	char		*res;
 	char		*str;
-	static char	*bcp[10240];
-	ssize_t		r;
+	static char	*backup;
+	int			r;
 
 	res = NULL;
 	if (fd < 0)
 		return (NULL);
 	str = (char *)ft_calloc(1, sizeof(char));
-	if (!str)
-		return (NULL);
 	r = 1;
 	while (r && includes(str, '\n') == -1)
 	{
 		if (!r)
 		{
-			in_the_end_of_file(&(bcp[fd]), &str, &res);
+			in_the_end_of_file(&backup, &str, &res);
 			return (NULL);
 		}
-		if (!read_from_file_and_feed_str(&str, &(bcp[fd]), fd, &r))
+		if (!read_from_file_and_feed_str(&str, fd, &r))
 			return (NULL);
 	}
-	return (handle_backup_and_set_res(&(bcp[fd]), &str, &res));
+	handle_backup_and_set_res(&backup, &str, &res);
+	return (res);
 }

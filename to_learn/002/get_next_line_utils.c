@@ -6,7 +6,7 @@
 /*   By: mhrima <mhrima@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 05:52:20 by mhrima            #+#    #+#             */
-/*   Updated: 2022/10/28 20:46:42 by mhrima           ###   ########.fr       */
+/*   Updated: 2022/10/29 00:16:14 by mhrima           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	int		i;
+	int		j;
 
 	i = 0;
-	if (!s1 && s2)
-		return ((char *)s2);
-	if (s1 && !s2)
-		return ((char *)s1);
-	if (!s1 && !s2)
-		return (NULL);
+	j = 0;
 	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	while (*s1)
+	while (s1 && *s1)
 		str[i++] = *s1++;
-	while (*s2)
+	free((void *)(s1 - i));
+	while (s2 && *s2)
+	{
 		str[i++] = *s2++;
+		j++;
+	}
+	free((void *)(s2 - j));
 	str[i] = '\0';
 	return (str);
 }
@@ -69,9 +70,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char			*s1;
 	unsigned int	i;
 
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
+	if (!s || start >= ft_strlen(s))
 		return (NULL);
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
@@ -91,17 +90,24 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_calloc(size_t count, size_t size)
 {
-	size_t			i;
+	void			*arr;
+	size_t			n;
 	unsigned char	*ptr;
 
-	ptr = (unsigned char *)s;
-	i = 0;
-	while (i < n)
+	if (count && size > SIZE_MAX / count)
+		return (NULL);
+	arr = (void *)malloc(count * size);
+	if (!arr)
+		return (NULL);
+	n = count * size;
+	ptr = (unsigned char *)arr;
+	while (0 < n)
 	{
 		*ptr = 0;
 		ptr++;
-		i++;
+		n--;
 	}
+	return (arr);
 }

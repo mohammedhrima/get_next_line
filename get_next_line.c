@@ -6,7 +6,7 @@
 /*   By: mhrima <mhrima@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 05:52:22 by mhrima            #+#    #+#             */
-/*   Updated: 2022/10/29 01:32:05 by mhrima           ###   ########.fr       */
+/*   Updated: 2022/10/29 21:21:43 by mhrima           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,36 @@ int	includes(char *str, char c)
 	return (-1);
 }
 
-void	handle_backup_and_set_res(char **backup, char **str, char **res)
+char	*handle_backup_and_set_res(char **bcp, char **str, char **res)
 {
 	int		i;
 	char	*tmp;
 
-	if (ft_strlen(*backup))
+	if (ft_strlen(*bcp))
 	{
-		tmp = ft_strjoin(*backup, *str);
+		tmp = ft_strjoin(*bcp, *str);
 		*str = tmp;
-		*backup = NULL;
+		*bcp = NULL;
 	}
 	i = includes(*str, '\n');
 	if (i == -1)
 	{
 		i = ft_strlen(*str) - 1;
-		free(*backup);
-		*backup = NULL;
+		free(*bcp);
+		*bcp = NULL;
 	}
-	*backup = ft_substr(*str, i + 1, ft_strlen(*str));
+	*bcp = ft_substr(*str, i + 1, ft_strlen(*str));
 	*res = ft_substr(*str, 0, i + 1);
 	free(*str);
 	*str = NULL;
+	return (*res);
 }
 
-int	read_from_file_and_feed_str(char **str, int fd, int *r)
+int	read_from_file_and_feed_str(char **str, char **bcp, int fd, ssize_t *r)
 {
 	char	*tmp;
 
-	tmp = (char *)ft_calloc(BUFFER_SIZE, sizeof(char));
+	tmp = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (tmp == NULL)
 	{
 		free(*str);
@@ -65,6 +66,7 @@ int	read_from_file_and_feed_str(char **str, int fd, int *r)
 	{
 		free(tmp);
 		free(*str);
+		free(*bcp);
 		return (0);
 	}
 	tmp[*r] = '\0';
@@ -72,9 +74,9 @@ int	read_from_file_and_feed_str(char **str, int fd, int *r)
 	return (1);
 }
 
-void	in_the_end_of_file(char **backup, char **str, char **res)
+void	in_the_end_of_file(char **bcp, char **str, char **res)
 {
-	free(&backup);
+	free(&bcp);
 	free(&str);
 	free(&res);
 }
@@ -83,24 +85,25 @@ char	*get_next_line(int fd)
 {
 	char		*res;
 	char		*str;
-	static char	*backup;
-	int			r;
+	static char	*bcp;
+	ssize_t		r;
 
 	res = NULL;
 	if (fd < 0)
 		return (NULL);
-	str = (char *)ft_calloc(1, sizeof(char));
+	str = ft_calloc(1, sizeof(char));
+	if (!str)
+		return (NULL);
 	r = 1;
 	while (r && includes(str, '\n') == -1)
 	{
 		if (!r)
 		{
-			in_the_end_of_file(&backup, &str, &res);
+			in_the_end_of_file(&bcp, &str, &res);
 			return (NULL);
 		}
-		if (!read_from_file_and_feed_str(&str, fd, &r))
+		if (!read_from_file_and_feed_str(&str, &bcp, fd, &r))
 			return (NULL);
 	}
-	handle_backup_and_set_res(&backup, &str, &res);
-	return (res);
+	return (handle_backup_and_set_res(&bcp, &str, &res));
 }
